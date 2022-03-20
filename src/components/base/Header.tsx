@@ -1,25 +1,52 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
 	AppBar,
-	Box,
 	Button,
-	IconButton,
 	Toolbar,
 	Typography,
+	useScrollTrigger,
+	Slide,
+	CssBaseline,
 } from "@mui/material";
 
-const Header: React.FC = () => {
+import { ThemeContext } from "../../context/ThemeContext";
+
+interface Props {
+	window?: () => Window;
+	children: React.ReactElement;
+}
+
+const HideOnScroll = (props: Props) => {
+	const { children, window } = props;
+	const trigger = useScrollTrigger({
+		target: window ? window() : undefined,
+	});
+
 	return (
-		<Box component="header" sx={{ flexGrow: 1 }}>
-			<AppBar position="static">
-				<Toolbar>
-					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-						Hey J.
-					</Typography>
-					<Button color="inherit">Login</Button>
-				</Toolbar>
-			</AppBar>
-		</Box>
+		<Slide appear={false} direction="down" in={!trigger}>
+			{children}
+		</Slide>
+	);
+};
+
+const Header = (props: Props) => {
+	const colorMode = useContext(ThemeContext);
+	return (
+		<>
+			<CssBaseline />
+			<HideOnScroll {...props}>
+				<AppBar position="static">
+					<Toolbar>
+						<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+							Hey J.
+						</Typography>
+						<Button color="inherit" onClick={colorMode.toggleColorMode}>
+							Theme
+						</Button>
+					</Toolbar>
+				</AppBar>
+			</HideOnScroll>
+		</>
 	);
 };
 

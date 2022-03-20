@@ -3,6 +3,7 @@ import type { NextPage } from "next";
 
 import MainLayout from "../layout/MainLayout";
 import Hero from "../components/home/Hero";
+import SignIn from "../components/home/SignIn";
 
 const Home: NextPage = () => {
 	return (
@@ -15,6 +16,7 @@ const Home: NextPage = () => {
 
 			<MainLayout>
 				<Hero />
+				<SignIn />
 			</MainLayout>
 		</>
 	);
